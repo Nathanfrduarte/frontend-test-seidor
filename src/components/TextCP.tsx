@@ -8,6 +8,9 @@ interface ITextCPProps {
     align?: 'center' | 'justify'
 }
 
+/*
+ * Componente de Texto
+ */
 function TextCP(props: ITextCPProps): JSX.Element {
 
     return (

@@ -2,6 +2,9 @@ import React from "react"
 import { Link } from "react-router-dom"
 import styled from 'styled-components'
 
+/*
+ * Componente de Menu
+ */
 export default function HeaderCP(): JSX.Element {
 
     return (

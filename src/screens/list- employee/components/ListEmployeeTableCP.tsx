@@ -1,12 +1,15 @@
-import React from "react"
+import React from 'react'
 import styled from 'styled-components'
-import IEmployee from "../../../interfaces/IEmployee"
+import IEmployee from '../../../interfaces/IEmployee'
 
 interface IListEmployeeTableCPProps {
     data: IEmployee[]
     onCalculateIRRFDiscount: (employee: IEmployee) => number
 }
 
+/*
+ * Componente de Tabela para listagem de Funcionários
+ */
 function ListEmployeeTableCP(props: IListEmployeeTableCPProps): JSX.Element {
 
     return (
@@ -67,6 +70,7 @@ const TableSCP = styled.table`
         align-items: center;
     }
 `
+
 const EditButton = styled.button`
     width: 50%;
     border: 1px solid  #5C8599;
@@ -74,7 +78,6 @@ const EditButton = styled.button`
     background:  #f0f0f0;
     color: #5C8599;
     transition: background-color 0.2s;
-
 
     :hover{
         background:  #5C8599 ;
@@ -89,7 +92,6 @@ const DeleteButton = styled.button`
     background:  #f0f0f0;
     color:  #ff5757;
     transition: background-color 0.2s;
-
 
     :hover{
         background:  #ff5757 ;

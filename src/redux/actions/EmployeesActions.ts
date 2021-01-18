@@ -1,9 +1,9 @@
 import IEmployee from '../../interfaces/IEmployee';
-import { EmployeeActionTypes, GET_EMPLOYEES } from '../types/EmployeeTypes';
+import { CreateEmployeeActionTypes, CREATE_EMPLOYEES } from '../types/EmployeeTypes';
 
-export const getEmployeeAction = (employees: IEmployee[]): EmployeeActionTypes => {
+export const createEmployeeAction = (employees: IEmployee[]): CreateEmployeeActionTypes => {
     return {
-        type: GET_EMPLOYEES,
+        type: CREATE_EMPLOYEES,
         payload: employees
     };
 };

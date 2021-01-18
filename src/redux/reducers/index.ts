@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import { getEmployeeReducer } from './EmployeeReducer'
+import { employeeReducer } from './EmployeeReducer'
 
 const rootReducer = combineReducers({
-    payload: getEmployeeReducer
+    payload: employeeReducer
 });
 
 export default rootReducer;
