@@ -89,27 +89,27 @@ function CreateEmployeeFormCP(props: IListEmployeeTableCPProps): JSX.Element {
 
             <div className="input-block">
                 <label htmlFor="name">Nome:</label>
-                <input id="name" maxLength={255} value={name} onChange={(event) => setName(event.target.value)} autoFocus required />
+                <input type='text' id="name" maxLength={255} value={name} onChange={(event) => setName(event.target.value)} autoFocus required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="cpf">CPF:</label>
-                <input id="cpf" maxLength={11} value={cpf} onChange={(event) => setCpf(event.target.value)} required />
+                <input type='text' id="cpf" pattern='\d{3}\.\d{3}\.\d{3}-\d{2}' title='Digite o CPF no formato: 000.000.000-00' value={cpf} onChange={(event) => setCpf(event.target.value)} required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="rawSalary">Salário Bruto:</label>
-                <input id="rawSalary" value={rawSalary} min={0} onChange={(event) => setRawSalary(+event.target.value)} required />
+                <input type='number' id="rawSalary" value={rawSalary} min={0} step={.01} onChange={(event) => setRawSalary(+event.target.value)} required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="discount">Desconto da Previdência:</label>
-                <input type='number' id="discount" value={discount} min={0} onChange={(event) => setDiscount(+event.target.value)} required />
+                <input type='number' id="discount" value={discount} min={0} step={.01} onChange={(event) => setDiscount(+event.target.value)} required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="dependents">Número de Dependentes:</label>
-                <input type='number' id="dependents" value={dependents} min={0} onChange={(event) => setDependents(+event.target.value)} required />
+                <input type='number' id="dependents" value={dependents} min={0} step={1} onChange={(event) => setDependents(+event.target.value)} required />
             </div>
 
             <button className="confirm-button" type="submit">

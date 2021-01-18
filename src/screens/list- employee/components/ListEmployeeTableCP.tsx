@@ -5,6 +5,7 @@ import IEmployee from '../../../interfaces/IEmployee'
 interface IListEmployeeTableCPProps {
     data: IEmployee[]
     onCalculateIRRFDiscount: (employee: IEmployee) => number
+    onDelete: (employee: IEmployee) => void
 }
 
 /*
@@ -33,13 +34,13 @@ function ListEmployeeTableCP(props: IListEmployeeTableCPProps): JSX.Element {
                             <tr key={'employee_' + employee.cpf}>
                                 <td>{employee.name}</td>
                                 <td>{employee.cpf}</td>
-                                <td>{employee.rawSalary}</td>
-                                <td>{employee.discount}</td>
+                                <td>R${employee.rawSalary.toFixed(2).replace('.', ',')}</td>
+                                <td>R${employee.discount.toFixed(2).replace('.', ',')}</td>
                                 <td>{employee.dependents}</td>
-                                <td>{props.onCalculateIRRFDiscount(employee)}</td>
+                                <td>R${props.onCalculateIRRFDiscount(employee).toFixed(2).replace('.', ',')}</td>
                                 <td className='action-column'>
-                                    <EditButton>Editar</EditButton>
-                                    <DeleteButton>Excluir</DeleteButton>
+                                    <EditButton >Editar</EditButton>
+                                    <DeleteButton onClick={() => props.onDelete(employee)} >Excluir</DeleteButton>
                                 </td>
                             </tr>
                         </>)

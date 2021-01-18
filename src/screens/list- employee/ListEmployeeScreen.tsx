@@ -37,7 +37,7 @@ function ListEmployeeScreen(): JSX.Element {
     /*
      * Prepara os dados para calcular o desconto do IRPF
      */
-    function calculateIRRFDiscount(employee: IEmployee): number {
+    function handleIRRFDiscount(employee: IEmployee): number {
         // Salário Base IR
         const IRBaseSalary: number = employee.rawSalary - employee.discount - (deductionpPerDependent * employee.dependents)
         // Desconto IRRF
@@ -81,6 +81,18 @@ function ListEmployeeScreen(): JSX.Element {
         }
     }
 
+    /*
+     * Remove um funcionário
+     */
+    function deleteEmployee(employeeToRemove: IEmployee): void {
+
+        // Remove o funcionário da lista de funcionários
+        employeesData.employees.splice(employeesData.employees.indexOf(employeeToRemove), 1)
+        // Atualiza o Redux
+        dispatch(createEmployeeAction(employeesData.employees))
+        alert('Funcionário Excluído com Sucesso!')
+    }
+
     return <>
 
         <ScreenWrapper>
@@ -96,7 +108,11 @@ function ListEmployeeScreen(): JSX.Element {
 
                 <h2>Seus Funcionários</h2>
 
-                <ListEmployeeTableCP data={employeesData.employees} onCalculateIRRFDiscount={calculateIRRFDiscount} />
+                <ListEmployeeTableCP
+                    data={employeesData.employees}
+                    onCalculateIRRFDiscount={handleIRRFDiscount}
+                    onDelete={deleteEmployee}
+                />
 
             </ContentSCP>
 

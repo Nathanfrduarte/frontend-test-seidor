@@ -16,15 +16,6 @@ export const employeeReducer = (
                 ...state,
                 employees: action.payload
             }
-        // case REMOVE_EMPLOYEES:
-        //     const updatedArticles: IEmployee[] = state.employees.filter(
-        //         employee => employee.cpf !== action.payload.id
-        //     )
-
-        //     return {
-        //         ...state,
-        //         employees: updatedArticles
-        //     }
         default:
             return state
     }
