@@ -1,25 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 import HeaderCP from '../../components/HeaderCP'
-// import { bindActionCreators } from 'redux'
-import { /*connect,*/ useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-// import * as employeeActions from '../redux/actions/EmployeesActions'
 import IEmployee from '../../interfaces/IEmployee'
-import { getEmployeeAction } from '../../redux/actions/EmployeesActions'
+import { createEmployeeAction } from '../../redux/actions/EmployeesActions'
 import CreateEmployeeFormCP from './components/CreateEmployeeFormCP'
+import { AppState } from '../../redux/store'
 
-// const mapDispatchToProps = (dispatch: any) => {
-//     bindActionCreators(employeeActions, dispatch)
-// }
-
+/*
+ * Página da Registro de Funcionários
+ */
 function CreateEmployeeScreen(): JSX.Element {
     const dispatch = useDispatch();
+    // Dados no Redux
+    const employeesData = useSelector((state: AppState) => state.payload)
 
-    function handleSubmit(employee: IEmployee[]) {
-
+    /*
+     * Salva os dados do Formulário
+     */
+    function handleSubmit(employee: IEmployee) {
         // Salva dados no Redux
-        dispatch(getEmployeeAction(employee))
+        dispatch(createEmployeeAction([...employeesData.employees, employee]))
         alert('Funcionário Registrado com Sucesso!')
     }
 
@@ -32,7 +34,6 @@ function CreateEmployeeScreen(): JSX.Element {
             <ContentSCP>
 
                 <h1>Registrar Funcionário</h1>
-
                 <CreateEmployeeFormCP onHandleSubmit={handleSubmit} />
 
             </ContentSCP>
@@ -42,7 +43,6 @@ function CreateEmployeeScreen(): JSX.Element {
     </>
 }
 
-// export default connect(null, mapDispatchToProps)(CreateEmployeeScreen)
 export default CreateEmployeeScreen
 
 const ScreenWrapper = styled.div`

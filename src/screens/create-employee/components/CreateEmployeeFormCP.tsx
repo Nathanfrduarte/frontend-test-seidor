@@ -1,11 +1,14 @@
-import React, { FormEvent, useState } from "react"
+import React, { FormEvent, useState } from 'react'
 import styled from 'styled-components'
-import IEmployee from "../../../interfaces/IEmployee"
+import IEmployee from '../../../interfaces/IEmployee'
 
 interface IListEmployeeTableCPProps {
-    onHandleSubmit: (employee: IEmployee[]) => void
+    onHandleSubmit: (employee: IEmployee) => void
 }
 
+/*
+ * Componente de Formulário para criação de Funcionários
+ */
 function CreateEmployeeFormCP(props: IListEmployeeTableCPProps): JSX.Element {
 
     const [name, setName] = useState<string>('')
@@ -14,19 +17,38 @@ function CreateEmployeeFormCP(props: IListEmployeeTableCPProps): JSX.Element {
     const [discount, setDiscount] = useState<number>(0)
     const [dependents, setDependents] = useState<number>(0)
 
-    function handleSubmit(event: FormEvent) {
-        event.preventDefault()
+    /*
+     * Valida os dados do Formulário
+     */
+    function validateForm(formData: IEmployee): boolean {
 
-        const formData: IEmployee[] = [{
-            name,
-            cpf,
-            rawSalary,
-            discount,
-            dependents,
-        }]
+        if (!formData.name) {
+            return false
+        }
 
-        props.onHandleSubmit(formData)
+        if (!formData.cpf) {
+            return false
+        }
 
+        if (!formData.rawSalary) {
+            return false
+        }
+
+        if (!formData.discount) {
+            return false
+        }
+
+        if (!formData.dependents) {
+            return false
+        }
+
+        return true
+    }
+
+    /*
+     * Limpa os campos do Formulário
+     */
+    function resetForm() {
         setName('')
         setCpf('')
         setRawSalary(0)
@@ -34,32 +56,60 @@ function CreateEmployeeFormCP(props: IListEmployeeTableCPProps): JSX.Element {
         setDependents(0)
     }
 
+    /*
+     * Ação para salvar os dados
+     */
+    function handleSubmit(event: FormEvent) {
+        // Previne o comportamento padrão de redirecionamento do formulário
+        event.preventDefault()
+
+        // Agupamento dos campos do formulário
+        const formData: IEmployee = {
+            name,
+            cpf,
+            rawSalary,
+            discount,
+            dependents,
+        }
+
+        // Validação dos dados do Formulário
+        if (!validateForm(formData)) {
+            alert('Ops! Preencha todos os campos')
+            return
+        }
+
+        // Callback da persistencia dos dados
+        props.onHandleSubmit(formData)
+        // Limpa os campos do formulário
+        resetForm()
+    }
+
     return (
         <FormSCP onSubmit={handleSubmit}>
 
             <div className="input-block">
                 <label htmlFor="name">Nome:</label>
-                <input id="name" value={name} onChange={(event) => setName(event.target.value)} autoFocus />
+                <input id="name" maxLength={255} value={name} onChange={(event) => setName(event.target.value)} autoFocus required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="cpf">CPF:</label>
-                <input id="cpf" value={cpf} onChange={(event) => setCpf(event.target.value)} />
+                <input id="cpf" maxLength={11} value={cpf} onChange={(event) => setCpf(event.target.value)} required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="rawSalary">Salário Bruto:</label>
-                <input id="rawSalary" value={rawSalary} min={0} onChange={(event) => setRawSalary(+event.target.value)} />
+                <input id="rawSalary" value={rawSalary} min={0} onChange={(event) => setRawSalary(+event.target.value)} required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="discount">Desconto da Previdência:</label>
-                <input type='number' id="discount" value={discount} min={0} onChange={(event) => setDiscount(+event.target.value)} />
+                <input type='number' id="discount" value={discount} min={0} onChange={(event) => setDiscount(+event.target.value)} required />
             </div>
 
             <div className="input-block">
                 <label htmlFor="dependents">Número de Dependentes:</label>
-                <input type='number' id="dependents" value={dependents} min={0} onChange={(event) => setDependents(+event.target.value)} />
+                <input type='number' id="dependents" value={dependents} min={0} onChange={(event) => setDependents(+event.target.value)} required />
             </div>
 
             <button className="confirm-button" type="submit">

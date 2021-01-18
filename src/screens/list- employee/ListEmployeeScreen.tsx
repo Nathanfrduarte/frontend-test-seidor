@@ -5,45 +5,53 @@ import TextCP from '../../components/TextCP'
 import IEmployee from '../../interfaces/IEmployee'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppState } from '../../redux/store'
-import { getEmployeeAction } from '../../redux/actions/EmployeesActions'
-
+import { createEmployeeAction } from '../../redux/actions/EmployeesActions'
 import aboutIRRF from '../../content/aboutIRRF.json'
 import PersonData from '../../content/pessoas.json'
 import ListEmployeeTableCP from './components/ListEmployeeTableCP'
 
 const deductionpPerDependent: number = 165.56
 
+/*
+ * Página da listagem de Funcionários
+ */
 function ListEmployeeScreen(): JSX.Element {
+    const dispatch = useDispatch()
 
+    // Dados de teste
     const defaultData: IEmployee[] = PersonData as IEmployee[]
+    // Dados no Redux
     const employeesData = useSelector((state: AppState) => state.payload)
-    const dispatch = useDispatch();
 
     useEffect(() => {
 
+        // Carrega os dados de funcionários já cadastrados caso exista
         if (!!employeesData.employees && employeesData.employees.length > 0) {
-            dispatch(getEmployeeAction(employeesData.employees))
+            dispatch(createEmployeeAction(employeesData.employees))
         } else {
-            dispatch(getEmployeeAction(defaultData))
+            dispatch(createEmployeeAction(defaultData))
         }
 
     }, [])
 
     /*
-    *
-    */
+     * Prepara os dados para calcular o desconto do IRPF
+     */
     function calculateIRRFDiscount(employee: IEmployee): number {
+        // Salário Base IR
         const IRBaseSalary: number = employee.rawSalary - employee.discount - (deductionpPerDependent * employee.dependents)
-        const IRPFDiscount: number = IRRFTable(IRBaseSalary, employee.rawSalary)
+        // Desconto IRRF
+        const IRPFDiscount: number = calculateDiscount(IRBaseSalary, employee.rawSalary)
 
         return IRPFDiscount
     }
 
     /* 
-    *
-    */
-    function IRRFTable(IRBaseSalary: number, rawSalary: number): number {
+     * Calcula o desconto do IRRF
+     */
+    function calculateDiscount(IRBaseSalary: number, rawSalary: number): number {
 
+        // Tabela progressiva do IRRF para difinição de Alíquota e Parcela a reduzir
         if (rawSalary < 1903.98) {
             return rawSalary
         } else {

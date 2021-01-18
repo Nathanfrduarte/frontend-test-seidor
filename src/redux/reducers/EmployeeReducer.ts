@@ -1,20 +1,30 @@
-import { GET_EMPLOYEES, GetEmployeeStateType, EmployeeActionTypes } from "../types/EmployeeTypes";
+import { CREATE_EMPLOYEES, CreateEmployeeStateType, CreateEmployeeActionTypes } from "../types/EmployeeTypes";
 
-const initialStateGetEmployee: GetEmployeeStateType = {
+const initialStateGetEmployee: CreateEmployeeStateType = {
     employees: []
 };
 
-export const getEmployeeReducer = (
+export const employeeReducer = (
     state = initialStateGetEmployee,
-    action: EmployeeActionTypes
-): GetEmployeeStateType => {
+    action: CreateEmployeeActionTypes
+): CreateEmployeeStateType => {
 
     switch (action.type) {
-        case GET_EMPLOYEES:
+        case CREATE_EMPLOYEES:
+
             return {
                 ...state,
                 employees: action.payload
             }
+        // case REMOVE_EMPLOYEES:
+        //     const updatedArticles: IEmployee[] = state.employees.filter(
+        //         employee => employee.cpf !== action.payload.id
+        //     )
+
+        //     return {
+        //         ...state,
+        //         employees: updatedArticles
+        //     }
         default:
             return state
     }
