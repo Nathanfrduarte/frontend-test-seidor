@@ -1,6 +1,6 @@
-# Frontend Test from Seidor
+# Frontend Test
 
-Practical technical test of Frontend for the company Seidor.\
+Practical technical test of Frontend.\
 Web system that allows us to manage our employees and the
 calculation of withholding income tax (IRRF).
 
